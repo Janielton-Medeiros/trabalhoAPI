@@ -27,9 +27,9 @@ public class SwaggerConfig {
     
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Auto Magicamente")
-                .description("Documentação da API da minha aplicação Spring Boot")
-                .version("1.0")
+                .title("AUTO-MAGICAMENTE")
+                .description("DOCUMENTAÇÃO DA API CURRÍCULO COM SPRING BOOT")
+                .version("1.0 TURBO")
                 .build();
     }
 }

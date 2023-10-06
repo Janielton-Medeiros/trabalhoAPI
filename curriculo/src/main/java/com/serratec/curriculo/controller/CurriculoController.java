@@ -17,13 +17,14 @@ import com.serratec.curriculo.model.Curriculo;
 import com.serratec.curriculo.service.CurriculoService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 
 
 
 @RestController
 @RequestMapping("/api/curriculos")
-@Api(tags = "TESTE")
+@Api(tags = "METODOS CRUD DA NOSSA API")
 public class CurriculoController {
 
 
@@ -32,33 +33,38 @@ public class CurriculoController {
 	
 
     @GetMapping
-    @ApiOperation("Testando")
+    @ApiOperation("MÉTODO PARA OBTER TODOS OS CURRÍCULOS EXISTENTES")
     public ResponseEntity<List<Curriculo>> ObterTodos(){
     	
         return ResponseEntity.ok(curriculoService.ObterTodos());
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("MÉTODO PARA OBTER CURRÍCULOS POR ID")
     public Curriculo ObterCurriculo(@PathVariable long id){
         return curriculoService.ObterCurriculo(id);
     }
     
     @PostMapping
+    @ApiOperation("MÉTODO PARA ADICIONAR NOVO CURRÍCULO")
     public Curriculo Adicionar(@RequestBody Curriculo curriculo){
         return curriculoService.Adicionar(curriculo);
     }
 
     @PutMapping("/{id}")
+    @ApiOperation("MÉTODO PARA ATUALIAR UM CURRÍCULO EXISTENTE POR ID")
     public Curriculo Atualizar(@PathVariable long id, @RequestBody Curriculo curriculo){
         return curriculoService.Atualizar(id, curriculo);
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation("MÉTODO PARA DELETAR UM CURRÍCULO EXISTENTE POR ID")
     public void Deletar(@PathVariable long id){
         curriculoService.Deletar(id);
     }
 
     @PostMapping("/upload")
+    @ApiOperation("MÉTODO PARA ADICIONAR UMA IMAGEM EM UM CURRÍCULO EXISTENTE")
 	public void upload(@RequestPart("file") MultipartFile foto) {
     	curriculoService.salvarImagem(foto);
 	}
