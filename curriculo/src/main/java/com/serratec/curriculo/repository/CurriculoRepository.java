@@ -77,7 +77,7 @@ public class CurriculoRepository {
     	//String nomeFoto = Long.toString(ultimoId);
     	
     	Path diretorioPath = Paths.get(this.raiz, this.diretorioFotos);
-		Path arquivoPath = diretorioPath.resolve(Long.toString(ultimoId));
+		Path arquivoPath = diretorioPath.resolve(Long.toString(ultimoId).concat(".jpg"));
 		FileInputStream imageInputStream = null;
 
 		try {      

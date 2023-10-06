@@ -7,7 +7,16 @@ Pesquisar, estudar, aprender, aplicar e ensinar ao professor e aos colegas os se
 2° Importar imagem ou anexos para dentro da API - 20 pontos
     2.1 Se for imagem, vc poderá enviar de até 2 formas diferentes. 
     2.1.1 A primeira seria em base64 no body
+<<<<<<< HEAD
     2.1.2 A segunda seria em File, a api deve receber e armazenar no disco fisico do servidor, o caminho onde ela foi salva deve ser salvo em algum lugar.
 
 
 SALVAR ESSE BITCODE NUM ARQUIVO TXT E SALVAR NO DIRETORIO.
+=======
+    2.1.2 A segunda seria em File, a api deve receber e armazenar no disco fisico do servidor, o caminho onde ela foi salva deve ser salvo em algum lugar  .
+
+
+
+
+
+>>>>>>> fa0be8d8f21324aacc5e5361225b580991414940
