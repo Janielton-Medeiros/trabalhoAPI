@@ -8,9 +8,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.InputMismatchException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.serratec.curriculo.model.Curriculo;
@@ -24,7 +27,7 @@ public class CurriculoRepository {
     @Value("${serratec.curriculo.diretorio-fotos}")
     private String diretorioFotos;
     
-    FotoPerfil fp = new FotoPerfil();
+    FotoPerfil fp = null;
     
     private List<Curriculo> curriculos = new ArrayList<>();
     
@@ -50,12 +53,31 @@ public class CurriculoRepository {
     public Curriculo Adicionar(Curriculo curriculo){
     	
         
-        curriculo.setId(ultimoId);
-        curriculo.setFotoPerfil(fp.getDiretorio());
-        curriculo.setImagemBase64(fp.getBase64());
-        curriculos.add(curriculo);
-        ultimoId++;
-        return curriculo;
+	        curriculo.setId(ultimoId);
+	        if(fp != null) {
+	        curriculo.setFotoPerfil(fp.getDiretorio());
+	        curriculo.setImagemBase64(fp.getBase64());
+	        curriculos.add(curriculo);
+	        fp = null;
+	        ultimoId++;
+        }else {
+        	curriculo.setId(ultimoId);
+        	
+        	Path diretorioPath = Paths.get(this.raiz, this.diretorioFotos);
+    		Path arquivoPath = diretorioPath.resolve(Long.toString(ultimoId));
+    		
+    		curriculo.setFotoPerfil(arquivoPath.toString());
+			try (FileWriter writer = new FileWriter(diretorioPath+"/"+Long.toString(ultimoId)+"imgBase64.txt")) {
+				writer.write(curriculo.getImagemBase64());
+				curriculo.setImagemBase64(Long.toString(ultimoId)+"imgBase64.txt");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ultimoId++;
+        }
+	        return curriculo;
+       
     }
 
     public Curriculo Atualizar(Curriculo curriculo){
@@ -75,7 +97,7 @@ public class CurriculoRepository {
     public void salvarImagem(MultipartFile arquivo){
     	
     	//String nomeFoto = Long.toString(ultimoId);
-    	
+    	fp = new FotoPerfil();
     	Path diretorioPath = Paths.get(this.raiz, this.diretorioFotos);
 		Path arquivoPath = diretorioPath.resolve(Long.toString(ultimoId));
 		FileInputStream imageInputStream = null;
