@@ -1,18 +1,6 @@
 package com.serratec.curriculo.model;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-//import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
-//import java.io.File;
-
 
 @Component
 public class Curriculo {
@@ -23,18 +11,34 @@ public class Curriculo {
     private String telefone;
     private String email;
     private String endereco;
-    
-
-    //private File imagem;
+    private String fotoPerfil; 
+    private String imagemBase64;
 
     //#region Get e Setters
-    public String getNomeCompleto() {
+       
+    public String getFotoPerfil() {
+		return fotoPerfil;
+	}
+
+	public String getImagemBase64() {
+		return imagemBase64;
+	}
+
+	public void setImagemBase64(String imagemBase64) {
+		this.imagemBase64 = imagemBase64;
+	}
+
+	public void setFotoPerfil(String fotoPerfil) {
+		this.fotoPerfil = fotoPerfil;
+	}
+
+	public String getNomeCompleto() {
         return nomeCompleto;
     }
 
-    public void setNomeComleto(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
-    }
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
 
     public Integer getIdade() {
         return idade;
@@ -73,45 +77,5 @@ public class Curriculo {
 
     public void setId(long id) {
         this.id = id;
-    }
-    //#endregion
-
-    @Value("${serratec.curriculo.raiz}")
-	private String raiz;
-	
-	public String getRaiz() {
-        return raiz;
-    }
-
-    public void setRaiz(String raiz) {
-        this.raiz = raiz;
-    }
-
-    @Value("${serratec.curriculo.diretorio-fotos}")
-	private String diretorioFotos;
-	
-	public String getDiretorioFotos() {
-        return diretorioFotos;
-    }
-
-    public void setDiretorioFotos(String diretorioFotos) {
-        this.diretorioFotos = diretorioFotos;
-    }
-
-    public void salvarFoto(@RequestPart("file") MultipartFile foto) {
-		this.salvar(this.diretorioFotos, foto);
-	}
-	
-	public void salvar(String diretorio, MultipartFile arquivo) {
-		Path diretorioPath = Paths.get(this.raiz, diretorio);
-		Path arquivoPath = diretorioPath.resolve(arquivo.getOriginalFilename());
-		
-		try {
-			Files.createDirectories(diretorioPath);
-			arquivo.transferTo(arquivoPath.toFile());			
-		} catch (IOException e) {
-			throw new RuntimeException("Problemas na tentativa de salvar arquivo.", e);
-		}		
-	}
-    
+    } 
 }
