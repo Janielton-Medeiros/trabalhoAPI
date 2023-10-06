@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.serratec.curriculo.model.Curriculo;
 import com.serratec.curriculo.repository.CurriculoRepository;
@@ -25,8 +27,8 @@ public class CurriculoService {
         return curriculo;
     }
 
-    public Curriculo Adicionar(Curriculo curriculo){
-
+    public Curriculo Adicionar(@RequestPart Curriculo curriculo){
+    	
         return curriculoRepository.Adicionar(curriculo);
     }
 
@@ -39,6 +41,10 @@ public class CurriculoService {
 
     public void Deletar(Long id){
         curriculoRepository.Deletar(id);
+    }
+    
+    public void salvarImagem(MultipartFile arquivo) {
+    	curriculoRepository.salvarImagem(arquivo);
     }
 
 
